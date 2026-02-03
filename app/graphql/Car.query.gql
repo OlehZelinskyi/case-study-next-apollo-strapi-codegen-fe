@@ -1,0 +1,15 @@
+query Car($documentId: ID!, $status: PublicationStatus) {
+  car(documentId: $documentId, status: $status) {
+    model
+    name
+    image {
+      url
+    }
+    documentId
+    year
+    owners {
+      fullname
+      documentId
+    }
+  }
+}

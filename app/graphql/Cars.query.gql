@@ -1,6 +1,15 @@
 query Cars {
   cars {
-    Model
-    Name
+    image {
+      url
+    }
+    documentId
+    model
+    name
+    year
+    owners {
+      fullname
+      documentId
+    }
   }
 }
