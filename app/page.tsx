@@ -11,9 +11,15 @@ export default async function Home() {
 
   return (
     <main className="p-6 bg-gray-50 min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
-        List of Cars
-      </h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold text-gray-800">List of Cars</h1>
+        <Link
+          href="/cars/create"
+          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+        >
+          Create new car
+        </Link>
+      </div>
       <ul className="list-none space-y-4 max-w-2xl mx-auto">
         {cars.map((car) => (
           <li

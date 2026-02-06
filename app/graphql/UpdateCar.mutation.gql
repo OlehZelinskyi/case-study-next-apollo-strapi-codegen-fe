@@ -1,0 +1,5 @@
+mutation UpdateCar($documentId: ID!, $data: CarInput!) {
+  updateCar(documentId: $documentId, data: $data) {
+    documentId
+  }
+}

@@ -1,0 +1,6 @@
+query Owners {
+  usersPermissionsUsers {
+    fullname
+    documentId
+  }
+}

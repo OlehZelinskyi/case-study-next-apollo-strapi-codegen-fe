@@ -1,0 +1,5 @@
+mutation CreateCar($data: CarInput!) {
+  createCar(data: $data) {
+    documentId
+  }
+}
