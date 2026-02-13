@@ -3,7 +3,12 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { OwnersQuery } from "@/generated/graphql";
+import {
+  CreateCarMutation,
+  OwnersQuery,
+  UpdateCarMutation,
+} from "@/generated/graphql";
+import { ApolloClient } from "@apollo/client";
 
 interface CreateCarFormProps {
   ownersData: OwnersQuery["usersPermissionsUsers"];
@@ -37,9 +42,11 @@ export default function CreateCarForm({ ownersData }: CreateCarFormProps) {
           }),
         });
 
-        const data = await response.json();
+        const json = await response.json();
 
-        if (data?.data?.createCar?.documentId) {
+        const data: CreateCarMutation = json.data;
+
+        if (data?.createCar?.documentId) {
           const formData = new FormData();
 
           if (form.image) {
@@ -63,15 +70,18 @@ export default function CreateCarForm({ ownersData }: CreateCarFormProps) {
                 "Content-Type": "application/json",
               },
               body: JSON.stringify({
-                documentId: data.data.createCar.documentId,
+                documentId: json.data.createCar.documentId,
                 imageDocId: fileDocId,
               }),
             });
 
-            const updateCarData = await updateCarResponse.json();
+            const updateCarData: {
+              data: ApolloClient.MutateResult<UpdateCarMutation>;
+              success: boolean;
+            } = await updateCarResponse.json();
 
             if (updateCarData?.success) {
-              router.push(`/cars/${data.data.createCar.documentId}`);
+              router.push(`/cars/${json.data.createCar.documentId}`);
             } else {
               router.push("/");
             }
@@ -81,7 +91,7 @@ export default function CreateCarForm({ ownersData }: CreateCarFormProps) {
         }
       } catch (error) {
         console.error("Error creating car:", error);
-        // Handle error, maybe show a message
+        router.push("/");
       }
     });
   };
